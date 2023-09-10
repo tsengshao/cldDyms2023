@@ -197,13 +197,14 @@ def cal_saturated_rv(P_hPa,T_K):
 def parcel_profile_2d(Temp02d_K,Press1d_hPa, qv02d_kgkg, Height1d_m):
     # conservation of equivalent potential temperature and potential temperature
     # interpolate to conservate theta_e
-    trange=np.arange(-40,50,0.01)+273.15
+    #trange=np.arange(-40,50,0.01)+273.15
+    trange=np.arange(-60,50,0.05)+273.15
     tt,pp=np.meshgrid(trange,Press1d_hPa)
     es_hPa = cal_saturated_vapor_pressure(tt)
     qq, rr = cal_absolute_humidity(es_hPa, pp)
     #rr = np.where(pp<300, 0.0, rr)
     theta_e = cal_equivalent_potential_temperature(pp,rr,tt)-273.15
-    #return pp, tt, rr, es_hPa, theta_e
+    theta_e = np.where(theta_e>500,np.nan,theta_e)
 
     nz, ny, nx = Press1d_hPa.size, Temp02d_K.shape[0], Temp02d_K.shape[1]
   
@@ -219,13 +220,13 @@ def parcel_profile_2d(Temp02d_K,Press1d_hPa, qv02d_kgkg, Height1d_m):
     idxt2d = np.argmin(np.abs(trange.reshape(trange.size,1,1)-parcel3d[idxLCL, idxY, idxX].reshape(1,ny,nx)),axis=0)
     conserve_thetae2d = theta_e[idxLCL,idxt2d]
 
-    idx300 = np.argmin(np.abs(Press1d_hPa-300))
-    for idx in range(idx300):
+    idx200 = np.argmin(np.abs(Press1d_hPa-200))
+    for idx in range(idx200):
       ind = np.where(idxLCL<=idx)
       if len(ind[0])==0: continue
       refresh = np.interp(conserve_thetae2d[ind], theta_e[idx,:], trange)
       parcel3d[idx*np.ones(ind[0].size,dtype=int),ind[0], ind[1]] = refresh
-    for idx in range(idx300, nz):
+    for idx in range(idx200, nz):
       parcel3d[idx,:,:] = parcel3d[idx-1,:,:]-0.0098*(Height1d_m[idx]-Height1d_m[idx-1])
     return idxLCL, parcel3d
 
