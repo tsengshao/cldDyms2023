@@ -1,14 +1,10 @@
 import sys
 import numpy as np
-import netCDF4 as nc
-import matplotlib.pyplot as plt
-from matplotlib import cm
 sys.path.insert(0, "../")
 import config
 from util.vvmLoader import VVMLoader
 from util.calculator import *
 from util.dataWriter import DataWriter
-#import util.skewt
 
 
 if __name__ == "__main__":
@@ -36,8 +32,6 @@ if __name__ == "__main__":
             th = np.array(thData['th'][0])
             qv = np.array(thData['qv'][0])
             temp = getTemperature(th, pbar3d, pibar3d)
-            #pp, tt, rr, es_hPa, theta_e = parcel_profile_2d(temp[0,:,:],pbar/100, qv[0,:,:],zc)
-            #sys.exit()
             idxLCL, parcel = parcel_profile_2d(temp[0,:,:],pbar/100, qv[0,:,:], zc)
             CAPE, CIN = cal_CAPE_CIN(temp, parcel, zc)
             dataWriter.toNC(f"cape-{tIdx:06d}.nc", CAPE[np.newaxis, :, :], 
@@ -50,10 +44,5 @@ if __name__ == "__main__":
                             varName = 'cin')
 
             #print(CAPE[ny//2,nx//10], CIN[ny//2,nx//10])
-            #plt.plot(temp[:,ny//2,nx//10]-273.15, pbar/100,'.-')
-            #plt.plot(parcel[:,ny//2,nx//10]-273.15, pbar/100,'.-')
-            #plt.yscale('log')
-            #plt.ylim(1000,100)
-            #plt.show()
             #sys.exit()
 
