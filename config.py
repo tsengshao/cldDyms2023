@@ -1,0 +1,17 @@
+homePath = "/data/C.shaoyu/CD2023/src"
+vvmPath = "/data/mog/rce/"
+caseNameList = ["rce_walker_15k_1m_p3", "rce_walker_1k_1m_p3", "rce_walker_1k_2m_p3", "rce_walker_15k_05m_p3"]
+vvmPropertyPath = "/data/C.shaoyu/CD2023/dat/vvmProperties/"
+capecinPath = vvmPropertyPath + "capecin/"
+
+buoyancyPath = vvmPropertyPath + "buoyancy/"
+msePath = vvmPropertyPath + "mse/"
+convolveBuoyancyPath = vvmPropertyPath + "convolveBuoyancy/"
+convolveMsePath = vvmPropertyPath + "convolveMSE/"
+convolveMseAnomalyPath = vvmPropertyPath + "convolveMseAnomaly/"
+convolveWPath = vvmPropertyPath + "convolveW/"
+mseTransportPath = vvmPropertyPath + "mseTransport/"
+laplacianBuoyPath = vvmPropertyPath + "laplacianBuoyancy/"
+rebuildDynPath = vvmPropertyPath + "rebuildDynCG/"
+rebuildDynFFTPath = vvmPropertyPath + "rebuildDynFFT/"
+convectQcPath = vvmPropertyPath + "convectQc/"
