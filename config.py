@@ -1,7 +1,7 @@
 homePath = "./"
 vvmPath = "/data/mog/rce/"
 caseNameList = ["rce_walker_15k_1m_p3", "rce_walker_1k_1m_p3", "rce_walker_1k_2m_p3", "rce_walker_15k_05m_p3"]
-vvmPropertyPathShao = "/data/C.shaoyu/CD2023/dat/vvmProperties/"
+vvmPropertyPathShao = "/data/cloud2023/r11229010/vvmProperties/"
 capecinPath = vvmPropertyPathShao + "capecin/"
 
 ## buoyancyPath = vvmPropertyPath + "buoyancy/"
