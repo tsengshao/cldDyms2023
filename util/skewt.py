@@ -4,6 +4,11 @@ import matplotlib.transforms as transforms
 import matplotlib.axis as maxis
 import matplotlib.spines as mspines
 from matplotlib.projections import register_projection
+import matplotlib.pyplot as plt
+import sys
+sys.path.insert(0, "../")
+import util.calculator as calc
+import numpy as np
 
 # The sole purpose of this class is to look at the upper, lower, or total
 # interval as appropriate and see what parts of the tick to draw, if any.
@@ -126,3 +131,50 @@ class SkewXAxes(Axes):
 
 # Now register the projection with matplotlib so the user can select it.
 register_projection(SkewXAxes)
+
+
+def draw_skewt():
+  trange=np.arange(-80,50,1)+273.15
+  prange=np.arange(50,1001,1)
+  tt,pp=np.meshgrid(trange,prange)
+  es_hPa  = calc.cal_saturated_vapor_pressure(tt)
+  qq, rr  = calc.cal_absolute_humidity(es_hPa, pp)
+  theta   = calc.cal_potential_temperature(pp, tt)-273.15
+  theta_e = calc.cal_equivalent_potential_temperature(pp,rr,tt)-273.15
+
+  # find theta_e ticks
+  idxp1000=np.where(prange==1000)[0][0]
+  idxp700=np.where(prange==700)[0][0]
+  idxt=np.where(np.isin(trange-273.15,[8,12,16,20,24,28,32]))[0]
+  ticks_thetae=theta_e[(idxp1000*np.ones(idxt.size)).astype(int),idxt]
+  # find theta ticks
+  ticks_theta=np.arange(-30,201,20)
+
+  plt.rcParams.update({'font.size':13,
+      'savefig.facecolor':(1,1,1,0),
+      'axes.linewidth':2,
+      'lines.linewidth':3}
+  )
+  # Create a new figure. The dimensions here give a good aspect ratio
+  fig = plt.figure(figsize=(6.5875, 6.2125*1.2))
+  ax = fig.add_axes([0.15,0.07,0.7,0.85],projection='skewx')
+
+  # plot grid
+  plt.grid(True,axis='y')
+  for t in np.arange(-100,100,20):
+    plt.fill_betweenx([1,1050],x1=t,x2=t+10,color='0.8')
+
+  # plot adiabatic line and qv line
+  plt.contour(trange-273.15, prange, theta,\
+              levels = ticks_theta, colors = '#E8100C',\
+              linewidths = 0.5, linestyles='-')
+  plt.contour(trange-273.15, prange, theta_e,\
+              levels = ticks_thetae, colors = '#4BAB4E',\
+              linewidths = 0.5, linestyles = '-')
+  C1 = plt.contour(trange[:]-273.15, prange[idxp700:idxp1000], qq[idxp700:idxp1000,:]*1e3,\
+                   levels = [1,2,3,5,8,12,20], colors = 'k',\
+                   linewidths = 0.5, linestyles=':')
+  plt.yscale('log')
+  plt.ylim(1000,100)
+  return fig, ax
+
