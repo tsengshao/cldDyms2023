@@ -18,7 +18,7 @@ if __name__ == "__main__":
         for i, caseName in enumerate(caseNameList):
             outputPath = f"{config.capecinPath}"
             dataWriter = DataWriter(outputPath = outputPath+f'{caseName}/')
-            print(dataWriter.outputPath)
+            #print(dataWriter.outputPath)
             vvmLoader = VVMLoader(dataDir=f"{config.vvmPath}{caseName}/")
             pbar = vvmLoader.loadPBAR()[:-1]
             pbar3d = pbar.reshape(pbar.size, 1, 1)
