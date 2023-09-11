@@ -1,6 +1,6 @@
 from moviepy.editor import VideoFileClip, clips_array
 
-var='cape'
+var='olrprec'
 flist = ['rce_walker_15k_05m_p3.mp4','rce_walker_15k_1m_p3.mp4','rce_walker_1k_1m_p3.mp4','rce_walker_1k_2m_p3.mp4']
 
 # merge vedio
