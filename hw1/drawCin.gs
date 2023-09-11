@@ -61,7 +61,7 @@ c300=subwrd(result,4)
 'draw xlab XC[km]'
 'draw title rce_walker_'ename' / CIN / t='t-1''
 '! mkdir -p ./fig/cin/rce_walker_'ename''
-'printim ./fig/cin/rce_walker_'ename'/'t'.png'
+'printim ./fig/cin/rce_walker_'ename'/'t'.png x2048 y1024'
 
 
 t=t+1

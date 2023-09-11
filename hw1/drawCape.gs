@@ -56,7 +56,7 @@ cmean=subwrd(result,4)
 'draw xlab XC[km]'
 'draw title rce_walker_'ename' / CAPE / t='t-1''
 '! mkdir -p ./fig/cape/rce_walker_'ename''
-'printim ./fig/cape/rce_walker_'ename'/'t'.png'
+'printim ./fig/cape/rce_walker_'ename'/'t'.png x2048 y1024'
 
 t=t+1
 endwhile
