@@ -14,11 +14,15 @@ class DataWriter:
         else:
             print("Path exists")
 
-    def toNC(self, fname, data, coords, dims, varName):
-        xrData = xr.DataArray(data, 
-                              coords = coords,
-                              dims = dims,
-                              name = varName)
+    def toNC(self, fname, data, coords, varName=None, dims=None):
+        if dims != None and varname != None:
+            xrData = xr.DataArray(data, 
+                                  coords = coords,
+                                  dims = dims,
+                                  name = varName)
+        else:
+            xrData = xr.Dataset(data, 
+                                coords = coords)
         xrData.to_netcdf(self.outputPath + fname)
         
     def toNPY(self, fname, data):
