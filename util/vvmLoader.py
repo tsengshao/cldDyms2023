@@ -44,9 +44,9 @@ class VVMLoader:
         rho = []
         lines = self.readFort98()
         if ("RHO(K)" in lines[self.headLineIdxOfRho]):
-            linePointer = headLineIdxOfRho + 2
+            linePointer = self.headLineIdxOfRho + 2
             while True:
-                rho.append(float(lines[self.headLineIdxOfRho][6:15]))
+                rho.append(float(lines[linePointer][6:15]))
                 linePointer += 1
                 if ("=" in lines[linePointer]): break
         return np.array(rho)
