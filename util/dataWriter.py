@@ -15,7 +15,7 @@ class DataWriter:
             print("Path exists")
 
     def toNC(self, fname, data, coords, varName=None, dims=None):
-        if dims != None and varname != None:
+        if dims != None and varName != None:
             xrData = xr.DataArray(data, 
                                   coords = coords,
                                   dims = dims,
