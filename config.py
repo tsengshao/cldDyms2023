@@ -9,7 +9,7 @@ vvmPropertyPathFskao = "/data/atmenu10246/cloudDyn/dat/vvmProperties/"
 msePath = vvmPropertyPathFskao + "mse/"
 streamFuncPath = vvmPropertyPathFskao + "streamFunc/"
 waterPath = vvmPropertyPathFskao + "waterPath/"
-
+tvPath = vvmPropertyPathFskao + "tv/"
 ## buoyancyPath = vvmPropertyPath + "buoyancy/"
 ## msePath = vvmPropertyPath + "mse/"
 ## convolveBuoyancyPath = vvmPropertyPath + "convolveBuoyancy/"
