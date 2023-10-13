@@ -144,13 +144,11 @@ def getGaussianConvolve(data, kernel, method="fft"):
     return convData
 
 # ========== get variables ==========
-def getTemperature(theta, pBar, piBar):
-    #temp = theta * ((pBar / 100000) ** (Rd / Cp))
-    temp = theta * piBar
-    return temp
-
-def getTemperature2(theta, pBar, piBar):
-    temp = theta * ((pBar / 100000) ** (Rd / Cp))
+def getTemperature(theta, pBar=None, piBar=None):
+    if pBar is not None:
+        temp = theta * ((pBar / 100000) ** (Rd / Cp))
+    elif piBar is not None:
+        temp = theta * piBar
     return temp
 
 def getMSE(temperature, zc3D, qv):
