@@ -4,13 +4,14 @@ caseNameList = ["rce_walker_15k_1m_p3", "rce_walker_1k_1m_p3", "rce_walker_1k_2m
 ## Shao Path
 vvmPropertyPathShao = "/data/C.shaoyu/CD2023/dat/vvmProperties/"
 capecinPath = vvmPropertyPathShao + "capecin/"
+conPath     = vvmPropertyPathShao + "conCom/"
 ## Fskao Path
 vvmPropertyPathFskao = "/data/atmenu10246/cloudDyn/dat/vvmProperties/"
 msePath = vvmPropertyPathFskao + "mse/"
 streamFuncPath = vvmPropertyPathFskao + "streamFunc/"
 waterPath = vvmPropertyPathFskao + "waterPath/"
 tvPath = vvmPropertyPathFskao + "tv/"
-## buoyancyPath = vvmPropertyPath + "buoyancy/"
+buoyancyPath = vvmPropertyPathFskao + "buoyancy/"
 ## msePath = vvmPropertyPath + "mse/"
 ## convolveBuoyancyPath = vvmPropertyPath + "convolveBuoyancy/"
 ## convolveMsePath = vvmPropertyPath + "convolveMSE/"
