@@ -11,6 +11,7 @@ from util.vvmLoader import VVMLoader
 from util.dataWriter import DataWriter
 from util.calculator import getTemperature
 import matplotlib.pyplot as plt
+import xarray as xr
 
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
@@ -21,6 +22,7 @@ if __name__ == "__main__":
     #iniTimeIdx, endTimeIdx = int(sys.argv[1]), int(sys.argv[2])
     #iniTimeIdx, endTimeIdx = 1, 1201
     iniTimeIdx, endTimeIdx = 961, 1201
+    iniTimeIdx, endTimeIdx = 600, 1201
     caseNameList = config.caseNameList
     timeArange = np.arange(iniTimeIdx, endTimeIdx, 1)
     hourTimeArange = timeArange*parameter.minPerTimeIdx/(60*24)
@@ -50,6 +52,7 @@ if __name__ == "__main__":
 
     print(caseName)
     vvmLoader = VVMLoader(dataDir=f"{config.vvmPath}{caseName}/")
+    dataWriter = DataWriter(outputPath=f"{config.disPath}{caseName}/")
     allCoreDepth = np.array([])
     for tIdx in timeArange:
         print(f"========== {tIdx}, {caseName:22s} =========")
@@ -69,10 +72,12 @@ if __name__ == "__main__":
         u = np.array(dyData["u"][0])
         v = np.array(dyData["v"][0])
 
-        threshold = 1
+        threshold = 10
         wMap = np.sum(np.where(w[:ilev10km,:]>threshold,1,0), axis=0)
         coreThick = (w[:ilev10km,:]>threshold)*np.diff(zz).reshape(zz.size-1,1,1)[:ilev10km,:]
         coreThick = np.sum(coreThick, axis=0)
+
+        wMap = np.where(w[ilev5km,:]>=threshold,1,0)
 
         labelArray, nLabel = sci.ndimage.label(\
                              np.where(wMap>0,1,0))
@@ -111,6 +116,15 @@ if __name__ == "__main__":
             ptxloc[minPts==ilab] = xloc[ilab]
             ptyloc[minPts==ilab] = yloc[ilab]
 
+        dataWriter.toNC(f"dis-{tIdx:06d}.nc", \
+                        dict(
+                            dis       = (["time", "yc", "xc"], dismap[np.newaxis, :, :]),
+                            xloc      = (["time", "yc", "xc"], ptxloc[np.newaxis, :, :]),
+                            yloc      = (["time", "yc", "xc"], ptyloc[np.newaxis, :, :])),
+                        coords = {'time': np.ones(shape=(1,)), 'yc': yc, 'xc': xc})
+
+        continue
+
         ang3d = np.arctan2(yarr-ptyloc, xarr-ptxloc).reshape(1, yc.size, xc.size)
         pwind  = v*np.cos(np.pi/2-ang3d) + u*np.cos(ang3d)
         vwind  = v*np.sin(np.pi/2-ang3d) - u*np.sin(ang3d)
@@ -136,6 +150,7 @@ if __name__ == "__main__":
              pwpz[itype, :, ip]   += np.sum( pwind[:, idxy, idxx], axis=1 )
              vwpz[itype, :, ip]   += np.sum( vwind[:, idxy, idxx], axis=1 )
              wpz[itype, :, ip]    += np.sum( w[:, idxy, idxx], axis=1 )
+    sys.exit('only write dis-nc')
 
     buopz  /= samplenum[:, np.newaxis, :]
     thpz   /= samplenum[:, np.newaxis, :]

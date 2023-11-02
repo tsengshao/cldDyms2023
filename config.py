@@ -5,6 +5,7 @@ caseNameList = ["rce_walker_15k_1m_p3", "rce_walker_1k_1m_p3", "rce_walker_1k_2m
 vvmPropertyPathShao = "/data/C.shaoyu/CD2023/dat/vvmProperties/"
 capecinPath = vvmPropertyPathShao + "capecin/"
 conPath     = vvmPropertyPathShao + "conCom/"
+disPath     = vvmPropertyPathShao + "disMap/"
 ## Fskao Path
 vvmPropertyPathFskao = "/data/atmenu10246/cloudDyn/dat/vvmProperties/"
 msePath = vvmPropertyPathFskao + "mse/"
