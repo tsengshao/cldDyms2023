@@ -123,7 +123,7 @@ def getGaussianWeight(kernelSize, std=1, normalize=True):
     gaussian1D = gaussian(kernelSize, std)
     gaussian2D = np.outer(gaussian1D, gaussian1D)
     if normalize:
-        gaussian2D /= (2*np.pi*(std**2))
+        gaussian2D /= gaussian2D.sum()
     return gaussian2D
 
 def getGaussianConvolve(data, kernel, method="fft"):
